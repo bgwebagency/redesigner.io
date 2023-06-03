@@ -14,7 +14,7 @@ type Input = {
   upscale: number
 }
 
-export async function handler(
+export default async function handler(
   req: ExtendedNextApiRequest,
   res: NextApiResponse
 ) {
