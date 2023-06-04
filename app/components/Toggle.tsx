@@ -8,11 +8,11 @@ export default function Toggle({
   setEnabled: (enabled: boolean) => void
 }) {
   return (
-    <div className="py-16">
+    <div className="py-6 md:py-16">
       <Switch
         checked={enabled}
         onChange={setEnabled}
-        className={`${enabled ? 'bg-teal-900' : 'bg-teal-700'}
+        className={`${enabled ? 'bg-primary' : 'bg-primary-shade50'}
           relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
       >
         <span className="sr-only">Use setting</span>

@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         codeformer_fidelity: 0.7,
         face_upsample: true,
         background_enhance: true,
-        upscale: 2,
+        upscale: 1,
       },
     }),
   })

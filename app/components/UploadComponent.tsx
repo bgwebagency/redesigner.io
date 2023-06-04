@@ -10,6 +10,8 @@ import CompareSlider from './CompareSlider'
 import Toggle from './Toggle'
 import NSFWPredictor from '../../utils/nsfwCheck'
 import va from '@vercel/analytics'
+import { Button } from 'greenhouse-react-ui'
+import { useMediaQuery } from '@react-hook/media-query'
 
 if (!process.env.NEXT_PUBLIC_UPLOAD_IO_API_KEY)
   throw new Error('UPLOAD_IO_API_KEY is not set')
@@ -35,7 +37,8 @@ const uploaderOptions = {
 
   styles: {
     colors: {
-      primary: '#377dff',
+      // TODO: Read these from the theme not hard coded
+      primary: '#6ea83d',
     },
   },
   onValidate: async (file: File): Promise<string | undefined> => {
@@ -68,6 +71,7 @@ export default function UploadComponent() {
   const [downloading, setDownloading] = useState(false)
   const [sidebyside, setSidebyside] = useState(true)
   const [imageName, setImageName] = useState<string | null>(null)
+  const matches = useMediaQuery('only screen and (min-width: 768px)')
 
   async function restoreImage(imageUrl: string) {
     try {
@@ -104,21 +108,33 @@ export default function UploadComponent() {
     setDownloading(false)
   }
 
-  if (loading) return <p>Loading...</p>
+  const resetFields = () => {
+    setImageUrl(null)
+    setRestoredImageUrl(null)
+    setRestoredImageLoaded(false)
+    setImageName(null)
+  }
 
   return (
-    <>
+    <div className="flex items-center flex-col mx-auto md:mt-12 w-full">
+      {loading && <p>Loading...</p>}
       {imageUrl && restoredImageUrl && (
         <>
-          <Toggle
-            enabled={sidebyside}
-            setEnabled={(val) => setSidebyside(val)}
-          />
+          <div className="flex gap-4 md:gap-10 justify-center items-center">
+            <span>Split view</span>
+            <Toggle
+              enabled={sidebyside}
+              setEnabled={(val) => setSidebyside(val)}
+            />
+            <span>Slider view</span>
+          </div>
           {!sidebyside && (
             <CompareSlider
               original={imageUrl}
               restored={restoredImageUrl}
-              classNames="w-[400px]"
+              classNames={`w-[${
+                matches ? 400 : 300
+              }px] flex justify-center items-center`}
               // TODO: Fix ts error
               // @ts-ignore
               portrait={true}
@@ -143,38 +159,60 @@ export default function UploadComponent() {
           // onComplete={(files) => alert(files.map((x) => x.fileUrl).join('\n'))}
           width="600px"
           height="375px"
+          className="mx-auto"
         />
       )}
-      <div className="flex gap-10">
+      <div className="flex flex-col md:flex-row md:gap-10 justify-center align-center">
         {sidebyside && (
           <>
             {/* https://upcdn.io/12a1yJB/raw/uploads/2023/06/04/PASSPORT_PHOTO-5wmg.jpg */}
             {imageUrl && (
-              <Image src={imageUrl} alt="Main image" width={400} height={400} />
+              <div className="flex flex-col">
+                <Image
+                  src={imageUrl}
+                  alt="Main image"
+                  width={matches ? 400 : 300}
+                  height={matches ? 400 : 300}
+                />
+                <Button
+                  onClick={resetFields}
+                  className="mt-5 md:mt-10"
+                  size={matches ? 'small' : 'medium'}
+                >
+                  Upload another image
+                </Button>
+              </div>
             )}
             {restoredImageUrl && (
-              <a href={restoredImageUrl} target="_blank" rel="noreferrer">
+              // <a href={restoredImageUrl} target="_blank" rel="noreferrer">
+              <div className="flex flex-col mt-5 md:mt-0">
                 <Image
                   src={restoredImageUrl}
                   alt="Restored image"
-                  width={400}
-                  height={400}
+                  width={matches ? 400 : 300}
+                  height={matches ? 400 : 300}
                   onLoad={() => setRestoredImageLoaded(true)}
                 />
-              </a>
+                {/* TODO: Fix sonarlint warning */}
+                {restoredImageLoaded && (
+                  <Button
+                    onClick={downloadRestoredImg}
+                    className="mt-5 md:mt-10"
+                    size={matches ? 'small' : 'medium'}
+                  >
+                    {downloading
+                      ? 'Downloading Restored Image'
+                      : 'Download Restored Image'}
+                  </Button>
+                )}
+                {/* https://replicate.delivery/pbxt/FeUR3TUZGM0GFSEx7FgWbkwWXSkwEP3PeMS99emefZKdDETIC/output.png */}
+              </div>
+
+              // </a>
             )}
           </>
         )}
-        {/* TODO: Fix sonarlint warning */}
-        {restoredImageLoaded && (
-          <button onClick={downloadRestoredImg}>
-            {downloading
-              ? 'Downloading Restored Image'
-              : 'Download Restored Image'}
-          </button>
-        )}
-        {/* https://replicate.delivery/pbxt/FeUR3TUZGM0GFSEx7FgWbkwWXSkwEP3PeMS99emefZKdDETIC/output.png */}
       </div>
-    </>
+    </div>
   )
 }
