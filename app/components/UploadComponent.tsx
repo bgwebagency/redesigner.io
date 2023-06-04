@@ -1,8 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 import { UploadDropzone } from 'react-uploader'
 import { Uploader } from 'uploader'
+import { downloadImg } from '../../utils/downloadImg'
 
 if (!process.env.NEXT_PUBLIC_UPLOAD_IO_API_KEY)
   throw new Error('UPLOAD_IO_API_KEY is not set')
@@ -41,6 +43,8 @@ export default function UploadComponent() {
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const [restoredImageUrl, setRestoredImageUrl] = useState<string | null>(null)
+  const [restoredImageLoaded, setRestoredImageLoaded] = useState(false)
+  const [downloading, setDownloading] = useState(false)
 
   async function restoreImage(imageUrl: string) {
     try {
@@ -59,6 +63,14 @@ export default function UploadComponent() {
       setLoading(false)
       console.error(error)
     }
+  }
+
+  const downloadRestoredImg = async () => {
+    if (!restoredImageUrl)
+      throw new Error('No restored image found. Try Again!')
+    setDownloading(true)
+    await downloadImg(restoredImageUrl, 'restoredPhoto.jpg')
+    setDownloading(false)
   }
 
   if (loading) return <p>Loading...</p>
@@ -81,10 +93,29 @@ export default function UploadComponent() {
         width="600px"
         height="375px"
       />
-      {/* https://upcdn.io/12a1yJB/raw/uploads/2023/06/04/PASSPORT_PHOTO-5wmg.jpg */}
-      {imageUrl && <img src={imageUrl} alt="Main image" />}
-      {restoredImageUrl && <img src={restoredImageUrl} alt="Restored image" />}
-      {/* https://replicate.delivery/pbxt/FeUR3TUZGM0GFSEx7FgWbkwWXSkwEP3PeMS99emefZKdDETIC/output.png */}
+      <div className="flex gap-10">
+        {/* https://upcdn.io/12a1yJB/raw/uploads/2023/06/04/PASSPORT_PHOTO-5wmg.jpg */}
+        {imageUrl && (
+          <Image src={imageUrl} alt="Main image" width={400} height={400} />
+        )}
+        {restoredImageUrl && (
+          <Image
+            src={restoredImageUrl}
+            alt="Restored image"
+            width={400}
+            height={400}
+            onLoad={() => setRestoredImageLoaded(true)}
+          />
+        )}
+        {restoredImageLoaded && (
+          <button onClick={() => downloadRestoredImg}>
+            {downloading
+              ? 'Downloading Restored Image'
+              : 'Download Restored Image'}
+          </button>
+        )}
+        {/* https://replicate.delivery/pbxt/FeUR3TUZGM0GFSEx7FgWbkwWXSkwEP3PeMS99emefZKdDETIC/output.png */}
+      </div>
     </>
   )
 }
