@@ -37,10 +37,8 @@ const uploaderOptions = {
   },
 }
 
-type RestoreResponse = {
+type RestoreResponse = Response & {
   restoredImageUrl?: string
-  errorCode?: string
-  errorMessage?: string
 }
 
 export default function UploadComponent() {
@@ -62,8 +60,8 @@ export default function UploadComponent() {
         body: JSON.stringify({ imageUrl }),
       })
       const data: RestoreResponse = await response.json()
-      if (data.errorCode === 'rate-limit-exceeded') {
-        throw new Error(data.errorMessage)
+      if (data.status === 429) {
+        throw new Error('Rate Limit exceeded. Try again in 30 seconds.')
       } else if (!data.restoredImageUrl) {
         throw new Error('No restored image found. Try Again!')
       }

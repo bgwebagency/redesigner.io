@@ -5,7 +5,7 @@ import requestIp from 'request-ip'
 
 const ratelimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(5, '30 s'),
+  limiter: Ratelimit.slidingWindow(1, '300 s'),
   analytics: true,
 })
 
@@ -22,17 +22,13 @@ export async function POST(request: Request) {
   const identifier = requestIp.getClientIp({ headers: {} })
   const { success, limit, remaining } = await ratelimit.limit(identifier!)
   const newHeaders = new Headers(request.headers)
-  // TODO: Check how we can set this header in the response
-  // Add a new header
+
+  // Add a new custom header
   newHeaders.set('x-RateLimit-Limit', limit.toString())
   newHeaders.set('x-RateLimit-Remaining', remaining.toString())
 
   if (!success) {
-    return NextResponse.json({
-      errorCode: 'rate-limit-exceeded',
-      errorMessage:
-        'Unable to process at this time. Please try again in 30 seconds.',
-    })
+    return NextResponse.json({ headers: newHeaders, status: 429 })
   }
 
   const req = await request.json()
@@ -107,7 +103,10 @@ export async function POST(request: Request) {
 
   // return the image
   // console.log('restoredImageUrl', restoredImageUrl)
-  return NextResponse.json({
-    restoredImageUrl: restoredImageUrl ?? 'Failed to generate image',
-  })
+  return NextResponse.json(
+    {
+      restoredImageUrl: restoredImageUrl ?? 'Failed to generate image',
+    },
+    { headers: newHeaders }
+  )
 }
