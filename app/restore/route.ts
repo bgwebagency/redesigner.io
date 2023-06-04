@@ -1,4 +1,13 @@
 import { NextResponse } from 'next/server'
+import { Redis } from '@upstash/redis'
+import { Ratelimit } from '@upstash/ratelimit'
+import requestIp from 'request-ip'
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, '30 s'),
+  analytics: true,
+})
 
 type Input = {
   image: string
@@ -9,6 +18,23 @@ type Input = {
 }
 
 export async function POST(request: Request) {
+  // Use ip address for individual limits.
+  const identifier = requestIp.getClientIp({ headers: {} })
+  const { success, limit, remaining } = await ratelimit.limit(identifier!)
+  const newHeaders = new Headers(request.headers)
+  // TODO: Check how we can set this header in the response
+  // Add a new header
+  newHeaders.set('x-RateLimit-Limit', limit.toString())
+  newHeaders.set('x-RateLimit-Remaining', remaining.toString())
+
+  if (!success) {
+    return NextResponse.json({
+      errorCode: 'rate-limit-exceeded',
+      errorMessage:
+        'Unable to process at this time. Please try again in 30 seconds.',
+    })
+  }
+
   const req = await request.json()
 
   const { imageUrl } = req
@@ -69,7 +95,7 @@ export async function POST(request: Request) {
       }
     )
     let imageResponseJson: ImageResponseJSON = await imageResponse.json()
-    console.log('imageResponseJson', JSON.stringify(imageResponseJson))
+    // console.log('imageResponseJson', JSON.stringify(imageResponseJson))
     if (imageResponseJson.status === 'succeeded') {
       restoredImageUrl = imageResponseJson.output
     } else if (imageResponseJson.status === 'failed') {
@@ -80,7 +106,7 @@ export async function POST(request: Request) {
   }
 
   // return the image
-  console.log('restoredImageUrl', restoredImageUrl)
+  // console.log('restoredImageUrl', restoredImageUrl)
   return NextResponse.json({
     restoredImageUrl: restoredImageUrl ?? 'Failed to generate image',
   })
