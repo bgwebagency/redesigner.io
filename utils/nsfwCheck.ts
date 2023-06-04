@@ -54,13 +54,16 @@ class NSFWPredictor {
   async isSafeImage(file: File) {
     try {
       const predictions = await this.predictImage(file, 3)
-      const neutralPrediction = predictions.find(
-        (p) => p.className === 'Neutral'
+      const pornPrediction = predictions.find((p) => p.className === 'Porn')
+      const hentaiPrediction = predictions.find((p) => p.className === 'Hentai')
+
+      // If we can't find either of these predictions, we'll assume it's safe
+      if (!pornPrediction || !hentaiPrediction) return true
+
+      // If either of these predictions are above 25%, we'll assume it's unsafe
+      return !(
+        pornPrediction.probability > 0.25 || hentaiPrediction.probability > 0.25
       )
-      if (!neutralPrediction) {
-        return false
-      }
-      return neutralPrediction.probability > 0.25
     } catch (e) {
       console.error(e)
       return false

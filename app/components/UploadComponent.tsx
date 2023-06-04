@@ -9,6 +9,7 @@ import { appendRestoredToName } from '../../utils/appendRestoredToName'
 import CompareSlider from './CompareSlider'
 import Toggle from './Toggle'
 import NSFWPredictor from '../../utils/nsfwCheck'
+import va from '@vercel/analytics'
 
 if (!process.env.NEXT_PUBLIC_UPLOAD_IO_API_KEY)
   throw new Error('UPLOAD_IO_API_KEY is not set')
@@ -45,6 +46,10 @@ const uploaderOptions = {
     } catch (error) {
       console.error(error)
     }
+    // track on vercel analytics if not safe with a custom event
+    // https://vercel.com/docs/concepts/analytics/custom-events#tracking-an-event
+    if (!isSafe) va.track('nsfw-image-blocked')
+
     return isSafe
       ? undefined
       : 'Detected a NSFW image. If this was a mistake, please contact me at https://twitter.com/kirankdash'
