@@ -5,7 +5,7 @@ import requestIp from 'request-ip'
 
 const ratelimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(1, '300 s'),
+  limiter: Ratelimit.slidingWindow(5, '30 s'),
   analytics: true,
 })
 
