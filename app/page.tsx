@@ -34,7 +34,7 @@ export default function Home() {
       <div className="flex justify-center gap-6 mt-10 md:mt-14 2xl:mt-20">
         <div className="bg-white rounded-2xl p-2 2xl:p-4">
           <Image
-            src={'/input1.png'}
+            src={'/input1-blurred.jpg'}
             alt="Blurry portrait of Francis Ludicke"
             width={matches.xxl ? 400 : matches.md ? 250 : 300}
             height={matches.xxl ? 400 : matches.md ? 250 : 300}
