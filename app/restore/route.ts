@@ -5,11 +5,13 @@ import requestIp from 'request-ip'
 
 // TODO: to check what happens if daily limit of 10k is reached
 // should not do rate limit check once 10k is reached
-const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(5, '30 s'),
-  analytics: true,
-})
+// TODO: temporarily remove this to fix fly.io deployment
+// const ratelimit = new Ratelimit({
+//   redis: Redis.fromEnv(),
+//   limiter: Ratelimit.slidingWindow(5, '30 s'),
+//   analytics: true,
+// })
+const ratelimit = false
 
 type Input = {
   image: string
@@ -25,21 +27,21 @@ export async function POST(request: Request) {
   const newHeaders = new Headers(request.headers)
 
   // Conditional rate limit check, so that we can disable it later using an env variable if required.
-  if (
-    ratelimit &&
-    process.env.UPSTASH_REDIS_REST_URL &&
-    process.env.UPSTASH_REDIS_REST_TOKEN
-  ) {
-    const { success, limit, remaining } = await ratelimit.limit(identifier!)
+  // if (
+  //   ratelimit &&
+  //   process.env.UPSTASH_REDIS_REST_URL &&
+  //   process.env.UPSTASH_REDIS_REST_TOKEN
+  // ) {
+  //   const { success, limit, remaining } = await ratelimit.limit(identifier!)
 
-    // Add a new custom header
-    newHeaders.set('x-RateLimit-Limit', limit.toString())
-    newHeaders.set('x-RateLimit-Remaining', remaining.toString())
+  //   // Add a new custom header
+  //   newHeaders.set('x-RateLimit-Limit', limit.toString())
+  //   newHeaders.set('x-RateLimit-Remaining', remaining.toString())
 
-    if (!success) {
-      return NextResponse.json({ headers: newHeaders, status: 429 })
-    }
-  }
+  //   if (!success) {
+  //     return NextResponse.json({ headers: newHeaders, status: 429 })
+  //   }
+  // }
 
   const req = await request.json()
 

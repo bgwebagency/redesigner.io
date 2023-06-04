@@ -37,6 +37,7 @@
     "uploader": "^3.0.2"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "0.2.14",
     "@types/request-ip": "0.0.37"
   }
 }
