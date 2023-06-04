@@ -8,6 +8,7 @@ import { downloadImg } from '../../utils/downloadImg'
 import { appendRestoredToName } from '../../utils/appendRestoredToName'
 import CompareSlider from './CompareSlider'
 import Toggle from './Toggle'
+import NSFWPredictor from '../../utils/nsfwCheck'
 
 if (!process.env.NEXT_PUBLIC_UPLOAD_IO_API_KEY)
   throw new Error('UPLOAD_IO_API_KEY is not set')
@@ -36,6 +37,18 @@ const uploaderOptions = {
       primary: '#377dff',
     },
   },
+  onValidate: async (file: File): Promise<string | undefined> => {
+    // nsfw check
+    let isSafe = false
+    try {
+      isSafe = await NSFWPredictor.isSafeImage(file)
+    } catch (error) {
+      console.error(error)
+    }
+    return isSafe
+      ? undefined
+      : 'Detected a NSFW image. If this was a mistake, please contact me at https://twitter.com/kirankdash'
+  },
 }
 
 type RestoreResponse = Response & {
@@ -63,7 +76,9 @@ export default function UploadComponent() {
       })
       const data: RestoreResponse = await response.json()
       if (data.status === 429) {
-        throw new Error('Rate Limit exceeded. Try again in sometime.')
+        throw new Error(
+          'Too many uploads recently. Try again in a few minutes.'
+        )
       } else if (!data.restoredImageUrl) {
         throw new Error('No restored image found. Try Again!')
       }
