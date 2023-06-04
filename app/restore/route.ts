@@ -103,7 +103,7 @@ export async function POST(request: Request) {
       }
     )
     let imageResponseJson: ImageResponseJSON = await imageResponse.json()
-    // console.log('imageResponseJson', JSON.stringify(imageResponseJson))
+    console.log('imageResponseJson', JSON.stringify(imageResponseJson))
     if (imageResponseJson.status === 'succeeded') {
       restoredImageUrl = imageResponseJson.output
     } else if (imageResponseJson.status === 'failed') {
@@ -114,7 +114,7 @@ export async function POST(request: Request) {
   }
 
   // return the image
-  // console.log('restoredImageUrl', restoredImageUrl)
+  console.log('restoredImageUrl', restoredImageUrl)
   return NextResponse.json(
     {
       restoredImageUrl: restoredImageUrl ?? 'Failed to generate image',
