@@ -1,4 +1,4 @@
-const appendRestoredToName = (name: string): string => {
+export const appendRestoredToName = (name: string): string => {
   const restored = '-restored'
   const dot = '.'
   const splitName = name.split(dot)
@@ -6,7 +6,8 @@ const appendRestoredToName = (name: string): string => {
   const restoredName = splitName
     .slice(0, splitNameLength - 1)
     .concat(restored)
+    .concat(dot)
     .concat(splitName[splitNameLength - 1])
-    .join(dot)
+    .join('')
   return restoredName
 }

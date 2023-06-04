@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { UploadDropzone } from 'react-uploader'
 import { Uploader } from 'uploader'
 import { downloadImg } from '../../utils/downloadImg'
+import { appendRestoredToName } from '../../utils/appendRestoredToName'
 import CompareSlider from './CompareSlider'
 import Toggle from './Toggle'
 
@@ -143,8 +144,9 @@ export default function UploadComponent() {
             )}
           </>
         )}
+        {/* TODO: Fix sonarlint warning */}
         {restoredImageLoaded && (
-          <button onClick={() => downloadRestoredImg}>
+          <button onClick={downloadRestoredImg}>
             {downloading
               ? 'Downloading Restored Image'
               : 'Download Restored Image'}
