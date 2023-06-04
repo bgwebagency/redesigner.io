@@ -48,6 +48,7 @@ export default function UploadComponent() {
   const [restoredImageLoaded, setRestoredImageLoaded] = useState(false)
   const [downloading, setDownloading] = useState(false)
   const [sidebyside, setSidebyside] = useState(true)
+  const [imageName, setImageName] = useState<string | null>(null)
 
   async function restoreImage(imageUrl: string) {
     try {
@@ -61,7 +62,7 @@ export default function UploadComponent() {
       })
       const data: RestoreResponse = await response.json()
       if (data.status === 429) {
-        throw new Error('Rate Limit exceeded. Try again in 30 seconds.')
+        throw new Error('Rate Limit exceeded. Try again in sometime.')
       } else if (!data.restoredImageUrl) {
         throw new Error('No restored image found. Try Again!')
       }
@@ -74,10 +75,11 @@ export default function UploadComponent() {
   }
 
   const downloadRestoredImg = async () => {
-    if (!restoredImageUrl)
+    if (!restoredImageUrl || !imageName)
       throw new Error('No restored image found. Try Again!')
     setDownloading(true)
-    await downloadImg(restoredImageUrl, 'restoredPhoto.jpg')
+    const fileName = appendRestoredToName(imageName)
+    await downloadImg(restoredImageUrl, fileName)
     setDownloading(false)
   }
 
@@ -111,6 +113,7 @@ export default function UploadComponent() {
               console.log('No files selected.')
             } else {
               console.log('File selected: ', files[0].fileUrl)
+              setImageName(files[0].originalFile.originalFileName)
               setImageUrl(files[0].fileUrl)
               restoreImage(files[0].fileUrl)
             }
