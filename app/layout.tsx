@@ -3,11 +3,6 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
-  title: 'Restore Face',
-  description: 'Restore old and blurry face photos with AI for free.',
-}
-
 export default function RootLayout({
   children,
 }: {
@@ -33,6 +28,31 @@ export default function RootLayout({
         href="/favicon-16x16.png"
       />
       <link rel="manifest" href="/site.webmanifest" />
+      <title>Restore Face</title>
+      <meta
+        name="description"
+        content="Restore old and blurry face photos with AI for free."
+      />
+      <meta property="og:site_name" content="restoreface.io" />
+      <meta
+        property="og:description"
+        content="Restore old and blurry face photos with AI for free."
+      />
+      <meta property="og:title" content="Restore Face" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Restore Face" />
+      <meta
+        name="twitter:description"
+        content="Restore old and blurry face photos with AI for free."
+      />
+      <meta
+        property="og:image"
+        content="https://restore-photos.vercel.app/og-image.png"
+      />
+      <meta
+        name="twitter:image"
+        content="https://restore-photos.vercel.app/og-image.png"
+      />
       <body className={inter.className}>{children}</body>
     </html>
   )

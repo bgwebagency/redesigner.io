@@ -1,4 +1,4 @@
-## restoreface.io
+## restoreface
 
 A web app that will help you restore faces from old or blurry photographs
 
