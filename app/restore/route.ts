@@ -1,10 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-
-type ExtendedNextApiRequest = NextApiRequest & {
-  body: {
-    imageUrl: string
-  }
-}
+import { NextResponse } from 'next/server'
 
 type Input = {
   image: string
@@ -14,18 +8,17 @@ type Input = {
   upscale: number
 }
 
-export default async function handler(
-  req: ExtendedNextApiRequest,
-  res: NextApiResponse
-) {
-  const { imageUrl } = req.query
+export async function POST(request: Request) {
+  const req = await request.json()
+
+  const { imageUrl } = req
 
   // start the image generation process
   const initResponse = await fetch('https://api.replicate.com/v1/predictions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Token ${process.env.REPLICATE_API_KEY}`,
+      Authorization: `Token ${process.env.REPLICATE_API_TOKEN}`,
     },
     body: JSON.stringify({
       version:
@@ -59,25 +52,26 @@ export default async function handler(
   const { id } = initResponseJson
 
   // poll the API every 1 sec until the image is ready
-  let restoredImage = null
+  let restoredImageUrl = null
 
   type ImageResponseJSON = Pick<
     InitResponseJSON,
     'id' | 'input' | 'output' | 'status'
   >
 
-  while (!restoredImage) {
+  while (!restoredImageUrl) {
     let imageResponse = await fetch(
       `https://api.replicate.com/v1/predictions/${id}`,
       {
         headers: {
-          Authorization: `Token ${process.env.REPLICATE_API_KEY}`,
+          Authorization: `Token ${process.env.REPLICATE_API_TOKEN}`,
         },
       }
     )
     let imageResponseJson: ImageResponseJSON = await imageResponse.json()
+    console.log('imageResponseJson', JSON.stringify(imageResponseJson))
     if (imageResponseJson.status === 'succeeded') {
-      restoredImage = imageResponseJson.output
+      restoredImageUrl = imageResponseJson.output
     } else if (imageResponseJson.status === 'failed') {
       throw new Error('Image generation failed')
     } else {
@@ -86,5 +80,8 @@ export default async function handler(
   }
 
   // return the image
-  res.status(200).json(restoredImage ?? 'Failed to generate image')
+  console.log('restoredImageUrl', restoredImageUrl)
+  return NextResponse.json({
+    restoredImageUrl: restoredImageUrl ?? 'Failed to generate image',
+  })
 }
