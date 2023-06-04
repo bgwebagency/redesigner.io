@@ -3,6 +3,8 @@ import { Redis } from '@upstash/redis'
 import { Ratelimit } from '@upstash/ratelimit'
 import requestIp from 'request-ip'
 
+// TODO: to check what happens if daily limit of 10k is reached
+// should not do rate limit check once 10k is reached
 const ratelimit = new Ratelimit({
   redis: Redis.fromEnv(),
   limiter: Ratelimit.slidingWindow(5, '30 s'),
@@ -20,15 +22,23 @@ type Input = {
 export async function POST(request: Request) {
   // Use ip address for individual limits.
   const identifier = requestIp.getClientIp({ headers: {} })
-  const { success, limit, remaining } = await ratelimit.limit(identifier!)
   const newHeaders = new Headers(request.headers)
 
-  // Add a new custom header
-  newHeaders.set('x-RateLimit-Limit', limit.toString())
-  newHeaders.set('x-RateLimit-Remaining', remaining.toString())
+  // Conditional rate limit check, so that we can disable it later using an env variable if required.
+  if (
+    ratelimit &&
+    process.env.UPSTASH_REDIS_REST_URL &&
+    process.env.UPSTASH_REDIS_REST_TOKEN
+  ) {
+    const { success, limit, remaining } = await ratelimit.limit(identifier!)
 
-  if (!success) {
-    return NextResponse.json({ headers: newHeaders, status: 429 })
+    // Add a new custom header
+    newHeaders.set('x-RateLimit-Limit', limit.toString())
+    newHeaders.set('x-RateLimit-Remaining', remaining.toString())
+
+    if (!success) {
+      return NextResponse.json({ headers: newHeaders, status: 429 })
+    }
   }
 
   const req = await request.json()

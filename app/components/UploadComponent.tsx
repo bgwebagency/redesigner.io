@@ -96,6 +96,7 @@ export default function UploadComponent() {
               original={imageUrl}
               restored={restoredImageUrl}
               classNames="w-[400px]"
+              // TODO: Fix ts error
               portrait={true}
             />
           )}
