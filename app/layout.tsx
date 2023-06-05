@@ -4,6 +4,7 @@ import { GreenHouse } from 'greenhouse-react-ui'
 import { Analytics } from '@vercel/analytics/react'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import ErrorBoundary from './components/ErrorBoundary'
 
 export default function RootLayout({
   children,
@@ -68,10 +69,12 @@ export default function RootLayout({
         <body className="font-sans">
           {' '}
           <main className="container m-auto min-h-screen flex flex-col px-4 md:px-0">
-            <Header />
-            {children}
-            <Footer />
-            <Analytics />
+            <ErrorBoundary>
+              <Header />
+              {children}
+              <Footer />
+              <Analytics />
+            </ErrorBoundary>
           </main>
         </body>
       </html>

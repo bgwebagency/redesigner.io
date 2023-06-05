@@ -113,10 +113,7 @@ export async function POST(request: Request) {
 
   // return the image
   // console.log('restoredImageUrl', restoredImageUrl)
-  return NextResponse.json(
-    {
-      restoredImageUrl: restoredImageUrl ?? 'Failed to generate image',
-    },
-    { headers: newHeaders }
-  )
+  return NextResponse.json({
+    restoredImageUrl: restoredImageUrl ?? 'Failed to generate image',
+  })
 }
