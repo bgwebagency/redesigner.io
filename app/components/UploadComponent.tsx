@@ -28,6 +28,7 @@ const uploader = Uploader({
 
 const uploaderOptions = {
   maxFileCount: 1,
+  maxFileSize: 20 * 1024 * 1024, // 20 MB
   mimeTypes: ['image/jpeg', 'image/png', 'image/jpg'],
   editor: { images: { crop: false } },
   // multi: true,
