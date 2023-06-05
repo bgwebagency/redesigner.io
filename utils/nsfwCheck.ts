@@ -14,7 +14,7 @@ class NSFWPredictor {
   async loadModel() {
     try {
       this.model = await nsfwjs.load(
-        'https://restoreportraits.vercel.app/model/',
+        'http://www.restoreportraits.com/model/',
         // @ts-ignore
         { type: 'graph' }
       )
