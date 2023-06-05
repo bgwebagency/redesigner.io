@@ -12,6 +12,7 @@ import NSFWPredictor from '../../utils/nsfwCheck'
 import va from '@vercel/analytics'
 import { Button } from 'greenhouse-react-ui'
 import { useMediaQuery } from '@react-hook/media-query'
+import Link from 'next/link'
 
 if (!process.env.NEXT_PUBLIC_UPLOAD_IO_API_KEY)
   throw new Error('UPLOAD_IO_API_KEY is not set')
@@ -174,10 +175,12 @@ export default function UploadComponent() {
                   width={matches ? 400 : 300}
                   height={matches ? 400 : 300}
                 />
+
                 <Button
                   onClick={resetFields}
                   className="mt-5 md:mt-10"
-                  size={matches ? 'small' : 'medium'}
+                  size={matches ? 'medium' : 'large'}
+                  layout="outline"
                 >
                   Upload another image
                 </Button>
@@ -186,19 +189,22 @@ export default function UploadComponent() {
             {restoredImageUrl && (
               // <a href={restoredImageUrl} target="_blank" rel="noreferrer">
               <div className="flex flex-col mt-5 md:mt-0">
-                <Image
-                  src={restoredImageUrl}
-                  alt="Restored image"
-                  width={matches ? 400 : 300}
-                  height={matches ? 400 : 300}
-                  onLoad={() => setRestoredImageLoaded(true)}
-                />
+                <Link href={restoredImageUrl} target="_blank">
+                  <Image
+                    src={restoredImageUrl}
+                    alt="Restored image"
+                    width={matches ? 400 : 300}
+                    height={matches ? 400 : 300}
+                    onLoad={() => setRestoredImageLoaded(true)}
+                  />
+                </Link>
                 {/* TODO: Fix sonarlint warning */}
                 {restoredImageLoaded && (
                   <Button
                     onClick={downloadRestoredImg}
                     className="mt-5 md:mt-10"
-                    size={matches ? 'small' : 'medium'}
+                    layout="outline"
+                    size={matches ? 'medium' : 'large'}
                   >
                     {downloading
                       ? 'Downloading Restored Image'
