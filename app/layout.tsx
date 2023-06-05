@@ -52,11 +52,11 @@ export default function RootLayout({
           />
           <meta
             property="og:image"
-            content="https://restore-photos.vercel.app/og-image.png"
+            content="https://restoreportraits.com/og-image.png"
           />
           <meta
             name="twitter:image"
-            content="https://restore-photos.vercel.app/og-image.png"
+            content="https://restoreportraits.com/og-image.png"
           />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           {/* @ts-ignore */}
