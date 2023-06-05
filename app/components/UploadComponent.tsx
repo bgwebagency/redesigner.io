@@ -176,14 +176,16 @@ export default function UploadComponent() {
                   height={matches ? 400 : 300}
                 />
 
-                <Button
-                  onClick={resetFields}
-                  className="mt-5 md:mt-10"
-                  size={matches ? 'medium' : 'large'}
-                  layout="outline"
-                >
-                  Upload another image
-                </Button>
+                {!loading && (
+                  <Button
+                    onClick={resetFields}
+                    className="mt-5 md:mt-10"
+                    size={matches ? 'medium' : 'large'}
+                    layout="outline"
+                  >
+                    Upload another image
+                  </Button>
+                )}
               </div>
             )}
             {restoredImageUrl && (
