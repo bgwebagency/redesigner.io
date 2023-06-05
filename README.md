@@ -1,6 +1,6 @@
 <div align="center">
   
-  <h1><a href="http://www.restoreportraits.com/">restoreportraits.com</a></h1>
+  <h1><a href="https://www.restoreportraits.com/">restoreportraits.com</a></h1>
 
 Bringing Old Photos Back to Life with AI.
 Free of charge!</span>
@@ -15,9 +15,3 @@ Don't forget to leave a star ⭐️
 ---
 
 </div>
-
-## Table of Contents
-
-[Language Basics](#1-what-will-this-code-output-%EF%B8%8F) - [Arrays](#18-array-and-traversal-in-array-%EF%B8%8F) - [Date and Time](#31-date-in-javascript) - [Object Oriented JavaScript](#34-object-literals-in-javascript)
-
----
