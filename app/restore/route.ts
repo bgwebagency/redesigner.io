@@ -5,13 +5,11 @@ import requestIp from 'request-ip'
 
 // TODO: to check what happens if daily limit of 10k is reached
 // should not do rate limit check once 10k is reached
-// TODO: temporarily remove this to fix fly.io deployment
-// const ratelimit = new Ratelimit({
-//   redis: Redis.fromEnv(),
-//   limiter: Ratelimit.slidingWindow(5, '30 s'),
-//   analytics: true,
-// })
-const ratelimit = false
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, '30 s'),
+  analytics: true,
+})
 
 type Input = {
   image: string
@@ -27,21 +25,21 @@ export async function POST(request: Request) {
   const newHeaders = new Headers(request.headers)
 
   // Conditional rate limit check, so that we can disable it later using an env variable if required.
-  // if (
-  //   ratelimit &&
-  //   process.env.UPSTASH_REDIS_REST_URL &&
-  //   process.env.UPSTASH_REDIS_REST_TOKEN
-  // ) {
-  //   const { success, limit, remaining } = await ratelimit.limit(identifier!)
+  if (
+    ratelimit &&
+    process.env.UPSTASH_REDIS_REST_URL &&
+    process.env.UPSTASH_REDIS_REST_TOKEN
+  ) {
+    const { success, limit, remaining } = await ratelimit.limit(identifier!)
 
-  //   // Add a new custom header
-  //   newHeaders.set('x-RateLimit-Limit', limit.toString())
-  //   newHeaders.set('x-RateLimit-Remaining', remaining.toString())
+    // Add a new custom header
+    newHeaders.set('x-RateLimit-Limit', limit.toString())
+    newHeaders.set('x-RateLimit-Remaining', remaining.toString())
 
-  //   if (!success) {
-  //     return NextResponse.json({ headers: newHeaders, status: 429 })
-  //   }
-  // }
+    if (!success) {
+      return NextResponse.json({ headers: newHeaders, status: 429 })
+    }
+  }
 
   const req = await request.json()
 
@@ -103,7 +101,7 @@ export async function POST(request: Request) {
       }
     )
     let imageResponseJson: ImageResponseJSON = await imageResponse.json()
-    console.log('imageResponseJson', JSON.stringify(imageResponseJson))
+    // console.log('imageResponseJson', JSON.stringify(imageResponseJson))
     if (imageResponseJson.status === 'succeeded') {
       restoredImageUrl = imageResponseJson.output
     } else if (imageResponseJson.status === 'failed') {
@@ -114,7 +112,7 @@ export async function POST(request: Request) {
   }
 
   // return the image
-  console.log('restoredImageUrl', restoredImageUrl)
+  // console.log('restoredImageUrl', restoredImageUrl)
   return NextResponse.json(
     {
       restoredImageUrl: restoredImageUrl ?? 'Failed to generate image',

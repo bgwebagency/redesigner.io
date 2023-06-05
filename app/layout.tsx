@@ -37,7 +37,7 @@ export default function RootLayout({
             name="description"
             content="Restore old and blurry face photos with AI for free."
           />
-          <meta property="og:site_name" content="restoreface.io" />
+          <meta property="og:site_name" content="restoreportraits.io" />
           <meta
             property="og:description"
             content="Restore old and blurry face photos with AI for free."
