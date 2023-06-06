@@ -45,9 +45,9 @@ export default function RootLayout({
             property="og:description"
             content="Redesign your house interior and exterior with AI for free"
           />
-          <meta property="og:title" content="Restore Portraits" />
+          <meta property="og:title" content="Redesigner" />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="Restore Portraits" />
+          <meta name="twitter:title" content="Redesigner" />
           <meta
             name="twitter:description"
             content="Redesign your house interior and exterior with AI for free"
