@@ -14,7 +14,7 @@ class NSFWPredictor {
   async loadModel() {
     try {
       this.model = await nsfwjs.load(
-        'https://www.restoreportraits.com/model/',
+        'https://www.redesigner.io/model/',
         // @ts-ignore
         { type: 'graph' }
       )
