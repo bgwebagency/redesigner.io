@@ -13,10 +13,6 @@ const ratelimit = new Ratelimit({
 
 type Input = {
   image: string
-  codeformer_fidelity: number
-  face_upsample: Boolean
-  background_enhance: Boolean
-  upscale: number
 }
 
 export async function POST(request: Request) {
@@ -43,8 +39,7 @@ export async function POST(request: Request) {
 
   const req = await request.json()
 
-  const { imageUrl } = req
-
+  const { imageUrl, roomType, roomTheme, buildingType, buildingTheme } = req
   // start the image generation process
   const initResponse = await fetch('https://api.replicate.com/v1/predictions', {
     method: 'POST',
@@ -54,13 +49,19 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify({
       version:
-        '7de2ea26c616d5bf2245ad0d5e24f0ff9a6204578a5c876db53142edd9d2cd56',
+        '435061a1b5a4c1e26740464bf786efdfa9cb3a3ac488595a2de23e143fdb0117',
       input: {
         image: imageUrl,
-        codeformer_fidelity: 0.7,
-        face_upsample: true,
-        background_enhance: true,
-        upscale: 1,
+        prompt:
+          roomType === 'Gaming Room'
+            ? 'a room for gaming with gaming computers, gaming consoles, and gaming chairs'
+            : roomType
+            ? `a ${roomTheme.toLowerCase()} ${roomType.toLowerCase()}`
+            : `a ${buildingTheme.toLowerCase()} ${buildingType.toLowerCase()}`,
+        a_prompt:
+          'best quality, extremely detailed, photo from Pinterest, interior, cinematic photo, ultra-detailed, ultra-realistic, award-winning',
+        n_prompt:
+          'longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality',
       },
     }),
   })
@@ -84,14 +85,14 @@ export async function POST(request: Request) {
   const { id } = initResponseJson
 
   // poll the API every 1 sec until the image is ready
-  let restoredImageUrl = null
+  let predictedImageUrls = null
 
   type ImageResponseJSON = Pick<
     InitResponseJSON,
     'id' | 'input' | 'output' | 'status'
   >
 
-  while (!restoredImageUrl) {
+  while (!predictedImageUrls) {
     let imageResponse = await fetch(
       `https://api.replicate.com/v1/predictions/${id}`,
       {
@@ -101,9 +102,9 @@ export async function POST(request: Request) {
       }
     )
     let imageResponseJson: ImageResponseJSON = await imageResponse.json()
-    // console.log('imageResponseJson', JSON.stringify(imageResponseJson))
+    console.log('imageResponseJson', JSON.stringify(imageResponseJson))
     if (imageResponseJson.status === 'succeeded') {
-      restoredImageUrl = imageResponseJson.output
+      predictedImageUrls = imageResponseJson.output
     } else if (imageResponseJson.status === 'failed') {
       throw new Error('Image generation failed')
     } else {
@@ -112,8 +113,8 @@ export async function POST(request: Request) {
   }
 
   // return the image
-  // console.log('restoredImageUrl', restoredImageUrl)
+  console.log('predictedImageUrl', predictedImageUrls)
   return NextResponse.json({
-    restoredImageUrl: restoredImageUrl ?? 'Failed to generate image',
+    predictedImageUrl: predictedImageUrls[1] ?? 'Failed to generate image',
   })
 }

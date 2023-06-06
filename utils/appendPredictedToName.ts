@@ -1,13 +1,13 @@
-export const appendRestoredToName = (name: string): string => {
-  const restored = '-restored'
+export const appendPredictedToName = (name: string): string => {
+  const predicted = '-predicted'
   const dot = '.'
   const splitName = name.split(dot)
   const splitNameLength = splitName.length
-  const restoredName = splitName
+  const predictedName = splitName
     .slice(0, splitNameLength - 1)
-    .concat(restored)
+    .concat(predicted)
     .concat(dot)
     .concat(splitName[splitNameLength - 1])
     .join('')
-  return restoredName
+  return predictedName
 }

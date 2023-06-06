@@ -14,21 +14,31 @@ export default function Home() {
   return (
     <div className="mb-auto">
       <div className="flex flex-col justify-center mt-8 md:mt-14 2xl:mt-40">
-        <h1 className="text-4xl md:text-5xl 2xl:text-6xl font-bold text-center leading-tight">
-          Bringing Old Photos Back to Life <br />
+        <h1 className="text-4xl md:text-5xl 2xl:text-6xl font-bold text-center leading-loose 2xl:leading-tight">
+          Redesign your home <br />
           <span className="text-primary">with AI</span>
         </h1>
         <p className="text-center mt-6 text-gray-400">
           No registration required. And entirely free!
         </p>
-        <div className="text-center mt-6">
-          <Button
-            onClick={() => router.push('/generate')}
-            layout="outline"
-            className="tracking-wider"
-          >
-            Restore Image
-          </Button>
+        <div className="flex gap-6 justify-center">
+          <div className="text-center mt-6">
+            <Button
+              onClick={() => router.push('/room')}
+              className="tracking-wider"
+            >
+              Redesign Room
+            </Button>
+          </div>
+          <div className="text-center mt-6">
+            <Button
+              onClick={() => router.push('/building')}
+              layout="outline"
+              className="tracking-wider"
+            >
+              Redesign Building
+            </Button>
+          </div>
         </div>
       </div>
       <div className="flex justify-center gap-6 mt-10 md:mt-14 2xl:mt-20">

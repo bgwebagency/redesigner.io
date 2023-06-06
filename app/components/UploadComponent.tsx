@@ -1,18 +1,18 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { UploadDropzone } from 'react-uploader'
 import { Uploader } from 'uploader'
 import { downloadImg } from '../../utils/downloadImg'
-import { appendRestoredToName } from '../../utils/appendRestoredToName'
-import CompareSlider from './CompareSlider'
-import Toggle from './Toggle'
+import { appendPredictedToName } from '../../utils/appendPredictedToName'
 import NSFWPredictor from '../../utils/nsfwCheck'
 import va from '@vercel/analytics'
 import { Button } from 'greenhouse-react-ui'
 import { useMediaQuery } from '@react-hook/media-query'
 import Link from 'next/link'
+import { RoomContext } from '../context/RoomContext'
+import { BuildingContext } from '../context/BuildingContext'
 
 if (!process.env.NEXT_PUBLIC_UPLOAD_IO_API_KEY)
   throw new Error('UPLOAD_IO_API_KEY is not set')
@@ -61,89 +61,80 @@ const uploaderOptions = {
   },
 }
 
-type RestoreResponse = Response & {
-  restoredImageUrl?: string
+type PredictResponse = Response & {
+  predictedImageUrl?: string
 }
 
 export default function UploadComponent() {
   const [loading, setLoading] = useState(false)
-  const [imageUrl, setImageUrl] = useState<string | null>(null)
-  const [restoredImageUrl, setRestoredImageUrl] = useState<string | null>(null)
-  const [restoredImageLoaded, setRestoredImageLoaded] = useState(false)
+  const [imageUrl, setImageUrl] = useState<string | null>('')
+  const [predictedImageUrl, setPredictedImageUrl] = useState<string>('')
+  const [predictedImageLoaded, setPredictedImageLoaded] = useState(false)
   const [downloading, setDownloading] = useState(false)
-  const [sidebyside, setSidebyside] = useState(true)
   const [imageName, setImageName] = useState<string | null>(null)
+  const { roomType, roomTheme } = useContext(RoomContext)
+  const { buildingType, buildingTheme } = useContext(BuildingContext)
+
   const matches = useMediaQuery('only screen and (min-width: 768px)')
 
-  async function restoreImage(imageUrl: string) {
-    try {
-      setLoading(true)
-      const response = await fetch('/restore', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ imageUrl }),
-      })
-      const data: RestoreResponse = await response.json()
-      if (data.status === 429) {
-        throw new Error(
-          'Too many uploads recently. Try again in a few minutes.'
-        )
-      } else if (!data.restoredImageUrl) {
-        throw new Error('No restored image found. Try Again!')
+  const precitImage = useCallback(
+    async (imageUrl: string) => {
+      try {
+        setLoading(true)
+        const response = await fetch('/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            imageUrl,
+            roomType,
+            roomTheme,
+            buildingType,
+            buildingTheme,
+          }),
+        })
+        const data: PredictResponse = await response.json()
+        if (data.status === 429) {
+          throw new Error(
+            'Too many uploads recently. Try again in a few minutes.'
+          )
+        } else if (!data.predictedImageUrl) {
+          throw new Error('No predicted image found. Try Again!')
+        }
+        setPredictedImageUrl(data.predictedImageUrl)
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        console.error(error)
       }
-      setRestoredImageUrl(data.restoredImageUrl)
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      console.error(error)
-    }
-  }
+    },
+    [roomType, roomTheme, buildingType, buildingTheme]
+  )
 
-  const downloadRestoredImg = async () => {
-    if (!restoredImageUrl || !imageName)
-      throw new Error('No restored image found. Try Again!')
+  const downloadPredictedImg = async (url: string) => {
+    if (!url || !imageName)
+      throw new Error('No predicted image found. Try Again!')
     setDownloading(true)
-    const fileName = appendRestoredToName(imageName)
-    await downloadImg(restoredImageUrl, fileName)
+    const fileName = appendPredictedToName(imageName)
+    await downloadImg(url, fileName)
     setDownloading(false)
   }
 
   const resetFields = () => {
-    setImageUrl(null)
-    setRestoredImageUrl(null)
-    setRestoredImageLoaded(false)
+    setImageUrl('')
+    setPredictedImageUrl('')
+    setPredictedImageLoaded(false)
     setImageName(null)
   }
 
   return (
     <div className="flex items-center flex-col mx-auto md:mt-12 w-full">
       {loading && <p>Loading...</p>}
-      {imageUrl && restoredImageUrl && (
-        <>
-          <div className="flex gap-4 md:gap-10 justify-center items-center">
-            <span>Split view</span>
-            <Toggle
-              enabled={sidebyside}
-              setEnabled={(val) => setSidebyside(val)}
-            />
-            <span>Slider view</span>
-          </div>
-          {!sidebyside && (
-            <CompareSlider
-              original={imageUrl}
-              restored={restoredImageUrl}
-              classNames={`w-[${
-                matches ? 400 : 300
-              }px] flex justify-center items-center`}
-              // TODO: Fix ts error
-              // @ts-ignore
-              portrait={true}
-            />
-          )}
-        </>
-      )}
+      <p className="mb-3">
+        {roomTheme} {roomType}
+        {buildingTheme} {buildingType}
+      </p>
       {!imageUrl && (
         <UploadDropzone
           uploader={uploader}
@@ -155,7 +146,7 @@ export default function UploadComponent() {
               console.log('File selected: ', files[0].fileUrl)
               setImageName(files[0].originalFile.originalFileName)
               setImageUrl(files[0].fileUrl)
-              restoreImage(files[0].fileUrl)
+              precitImage(files[0].fileUrl)
             }
           }}
           // onComplete={(files) => alert(files.map((x) => x.fileUrl).join('\n'))}
@@ -165,62 +156,57 @@ export default function UploadComponent() {
         />
       )}
       <div className="flex flex-col md:flex-row md:gap-10 justify-center align-center">
-        {sidebyside && (
-          <>
-            {/* https://upcdn.io/12a1yJB/raw/uploads/2023/06/04/PASSPORT_PHOTO-5wmg.jpg */}
-            {imageUrl && (
-              <div className="flex flex-col">
+        <>
+          {/* https://upcdn.io/12a1yJB/raw/uploads/2023/06/04/PASSPORT_PHOTO-5wmg.jpg */}
+          {imageUrl && (
+            <div className="flex flex-col">
+              <Image
+                src={imageUrl}
+                alt="Main image"
+                width={matches ? 400 : 300}
+                height={matches ? 400 : 300}
+              />
+
+              {!loading && (
+                <Button
+                  onClick={resetFields}
+                  className="mt-5 md:mt-10"
+                  size={matches ? 'medium' : 'large'}
+                  layout="outline"
+                >
+                  Upload another image
+                </Button>
+              )}
+            </div>
+          )}
+          {predictedImageUrl && (
+            <div className="flex flex-col mt-5 md:mt-0">
+              <Link href={predictedImageUrl} target="_blank">
                 <Image
-                  src={imageUrl}
-                  alt="Main image"
+                  src={predictedImageUrl}
+                  alt="Predicted image"
                   width={matches ? 400 : 300}
                   height={matches ? 400 : 300}
+                  onLoad={() => setPredictedImageLoaded(true)}
                 />
-
-                {!loading && (
-                  <Button
-                    onClick={resetFields}
-                    className="mt-5 md:mt-10"
-                    size={matches ? 'medium' : 'large'}
-                    layout="outline"
-                  >
-                    Upload another image
-                  </Button>
-                )}
-              </div>
-            )}
-            {restoredImageUrl && (
-              // <a href={restoredImageUrl} target="_blank" rel="noreferrer">
-              <div className="flex flex-col mt-5 md:mt-0">
-                <Link href={restoredImageUrl} target="_blank">
-                  <Image
-                    src={restoredImageUrl}
-                    alt="Restored image"
-                    width={matches ? 400 : 300}
-                    height={matches ? 400 : 300}
-                    onLoad={() => setRestoredImageLoaded(true)}
-                  />
-                </Link>
-                {/* TODO: Fix sonarlint warning */}
-                {restoredImageLoaded && (
-                  <Button
-                    onClick={downloadRestoredImg}
-                    className="mt-5 md:mt-10"
-                    layout="outline"
-                    size={matches ? 'medium' : 'large'}
-                  >
-                    {downloading
-                      ? 'Downloading Restored Image'
-                      : 'Download Restored Image'}
-                  </Button>
-                )}
-                {/* https://replicate.delivery/pbxt/FeUR3TUZGM0GFSEx7FgWbkwWXSkwEP3PeMS99emefZKdDETIC/output.png */}
-              </div>
-
-              // </a>
-            )}
-          </>
-        )}
+              </Link>
+              {/* TODO: Fix sonarlint warning */}
+              {predictedImageLoaded && (
+                <Button
+                  onClick={() => downloadPredictedImg(predictedImageUrl)}
+                  className="mt-5 md:mt-10"
+                  layout="outline"
+                  size={matches ? 'medium' : 'large'}
+                >
+                  {downloading
+                    ? 'Downloading Predicted Image'
+                    : 'Download Predicted Image'}
+                </Button>
+              )}
+              {/* https://replicate.delivery/pbxt/FeUR3TUZGM0GFSEx7FgWbkwWXSkwEP3PeMS99emefZKdDETIC/output.png */}
+            </div>
+          )}
+        </>
       </div>
     </div>
   )

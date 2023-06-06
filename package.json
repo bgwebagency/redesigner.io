@@ -1,5 +1,5 @@
 {
-  "name": "restoreportraits",
+  "name": "redesigner",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "1.7.15",
+    "@heroicons/react": "2.0.18",
     "@react-hook/media-query": "1.1.1",
     "@tensorflow/tfjs": "4.6.0",
     "@types/node": "20.2.5",

@@ -6,11 +6,11 @@ const Header = () => {
   return (
     <header className="py-6 flex justify-between">
       <Link href="..">
-        <h1 className="text-2xl md:text-4xl font-bold">restoreportraits.com</h1>
+        <h1 className="text-2xl md:text-4xl font-bold">redesigner.io</h1>
       </Link>
       <div>
         <a
-          href="https://github.com/bgwebagency/restoreportraits"
+          href="https://github.com/bgwebagency/redesigner"
           target="_blank"
           rel="noreferrer"
         >

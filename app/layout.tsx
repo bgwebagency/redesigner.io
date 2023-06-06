@@ -5,6 +5,8 @@ import { Analytics } from '@vercel/analytics/react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ErrorBoundary from './components/ErrorBoundary'
+import { BuildingProvider } from './context/BuildingContext'
+import { RoomProvider } from './context/RoomContext'
 
 export default function RootLayout({
   children,
@@ -33,30 +35,30 @@ export default function RootLayout({
             href="/favicon-16x16.png"
           />
           <link rel="manifest" href="/site.webmanifest" />
-          <title>Restore Portraits</title>
+          <title>Redesigner.io</title>
           <meta
             name="description"
-            content="Restore old and blurry face photos with AI for free."
+            content="Redesign your house interior and exterior with AI for free!"
           />
-          <meta property="og:site_name" content="restoreportraits.io" />
+          <meta property="og:site_name" content="redesigner.io" />
           <meta
             property="og:description"
-            content="Restore old and blurry face photos with AI for free."
+            content="Redesign your house interior and exterior with AI for free"
           />
           <meta property="og:title" content="Restore Portraits" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content="Restore Portraits" />
           <meta
             name="twitter:description"
-            content="Restore old and blurry face photos with AI for free."
+            content="Redesign your house interior and exterior with AI for free"
           />
           <meta
             property="og:image"
-            content="https://restoreportraits.com/og-image.png"
+            content="https://redesigner.io/og-image.png"
           />
           <meta
             name="twitter:image"
-            content="https://restoreportraits.com/og-image.png"
+            content="https://redesigner.io/og-image.png"
           />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           {/* @ts-ignore */}
@@ -70,10 +72,16 @@ export default function RootLayout({
           {' '}
           <main className="container m-auto min-h-screen flex flex-col px-4 md:px-0">
             <ErrorBoundary>
-              <Header />
-              {children}
-              <Footer />
-              <Analytics />
+              <RoomProvider>
+                <BuildingProvider>
+                  <>
+                    <Header />
+                    {children}
+                    <Footer />
+                    <Analytics />
+                  </>
+                </BuildingProvider>
+              </RoomProvider>
             </ErrorBoundary>
           </main>
         </body>
