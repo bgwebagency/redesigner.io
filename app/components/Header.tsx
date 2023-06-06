@@ -10,7 +10,7 @@ const Header = () => {
       </Link>
       <div>
         <a
-          href="https://github.com/bgwebagency/redesigner"
+          href="https://github.com/bgwebagency/redesigner.io"
           target="_blank"
           rel="noreferrer"
         >

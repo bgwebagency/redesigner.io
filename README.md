@@ -2,7 +2,7 @@
   
   <h1><a href="https://www.redesigner.io/">redesigner.io</a></h1>
 
-Redesigning house interior and exterior with AI.
+Redesign your house interior and exterior with AI.
 Free of charge!</span>
 
 Feel free to reach us on our social platforms! 😊 <br />
