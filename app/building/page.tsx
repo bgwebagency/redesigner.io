@@ -52,6 +52,7 @@ const Building = () => {
                 options={BuildingThemeTypes}
                 selected={buildingTheme as BuildingThemeType}
                 onChange={(item) => setBuildingTheme(item)}
+                className="mb-3"
               />
             </div>
             {/* Building theme */}

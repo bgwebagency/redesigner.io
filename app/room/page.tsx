@@ -50,6 +50,7 @@ const Room = () => {
                 options={RoomThemeTypes}
                 selected={roomTheme as RoomThemeType}
                 onChange={(item) => setRoomTheme(item)}
+                className="mb-3"
               />
             </div>
             {/* Room theme */}
