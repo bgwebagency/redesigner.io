@@ -1,5 +1,11 @@
-export const appendPredictedToName = (name: string): string => {
-  const predicted = '-predicted'
+export const appendTextToName = (
+  name: string,
+  type: string,
+  theme: string
+): string => {
+  const predicted = `-${theme.toLowerCase().replace(' ', '-')}-${type
+    .toLowerCase()
+    .replace(' ', '-')}`
   const dot = '.'
   const splitName = name.split(dot)
   const splitNameLength = splitName.length

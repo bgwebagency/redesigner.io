@@ -5,7 +5,7 @@ import { useCallback, useContext, useState } from 'react'
 import { UploadDropzone } from 'react-uploader'
 import { Uploader } from 'uploader'
 import { downloadImg } from '../../utils/downloadImg'
-import { appendPredictedToName } from '../../utils/appendPredictedToName'
+import { appendTextToName } from '../../utils/appendTextToName'
 import NSFWPredictor from '../../utils/nsfwCheck'
 import va from '@vercel/analytics'
 import { Button } from 'greenhouse-react-ui'
@@ -112,14 +112,26 @@ export default function UploadComponent() {
     [roomType, roomTheme, buildingType, buildingTheme]
   )
 
-  const downloadPredictedImg = async (url: string) => {
-    if (!url || !imageName)
-      throw new Error('No predicted image found. Try Again!')
-    setDownloading(true)
-    const fileName = appendPredictedToName(imageName)
-    await downloadImg(url, fileName)
-    setDownloading(false)
-  }
+  const downloadPredictedImg = useCallback(
+    async (url: string) => {
+      if (
+        !url ||
+        !imageName ||
+        (!roomType && !buildingType) ||
+        (!roomTheme && !buildingTheme)
+      )
+        throw new Error('No predicted image found. Try Again!')
+      setDownloading(true)
+      const fileName = appendTextToName(
+        imageName,
+        (roomType ?? buildingType) as string,
+        (roomTheme ?? buildingTheme) as string
+      )
+      await downloadImg(url, fileName)
+      setDownloading(false)
+    },
+    [roomType, roomTheme, buildingType, buildingTheme, imageName]
+  )
 
   const resetFields = () => {
     setImageUrl('')
