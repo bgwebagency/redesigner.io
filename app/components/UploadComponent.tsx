@@ -77,7 +77,7 @@ export default function UploadComponent() {
 
   const matches = useMediaQuery('only screen and (min-width: 768px)')
 
-  const precitImage = useCallback(
+  const predictImage = useCallback(
     async (imageUrl: string) => {
       try {
         setLoading(true)
@@ -130,11 +130,16 @@ export default function UploadComponent() {
 
   return (
     <div className="flex items-center flex-col mx-auto md:mt-12 w-full">
-      {loading && <p>Loading...</p>}
       <p className="mb-3">
-        {roomTheme} {roomType}
-        {buildingTheme} {buildingType}
+        <Button
+          disabled={!imageUrl || loading}
+          onClick={() => predictImage(imageUrl!)}
+        >
+          {loading ? 'Redesigning' : 'Redesign'} to: {roomTheme} {roomType}
+          {buildingTheme} {buildingType}
+        </Button>
       </p>
+
       {!imageUrl && (
         <UploadDropzone
           uploader={uploader}
@@ -146,7 +151,6 @@ export default function UploadComponent() {
               console.log('File selected: ', files[0].fileUrl)
               setImageName(files[0].originalFile.originalFileName)
               setImageUrl(files[0].fileUrl)
-              precitImage(files[0].fileUrl)
             }
           }}
           // onComplete={(files) => alert(files.map((x) => x.fileUrl).join('\n'))}
@@ -155,6 +159,7 @@ export default function UploadComponent() {
           className="mx-auto"
         />
       )}
+
       <div className="flex flex-col md:flex-row md:gap-10 justify-center align-center">
         <>
           {/* https://upcdn.io/12a1yJB/raw/uploads/2023/06/04/PASSPORT_PHOTO-5wmg.jpg */}

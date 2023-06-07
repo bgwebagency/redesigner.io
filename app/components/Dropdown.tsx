@@ -55,7 +55,7 @@ export default function Dropdown({
                       onClick={() => onChange(item)}
                       className={`${
                         active || selected === item
-                          ? 'bg-violet-500 text-white'
+                          ? 'bg-primary text-white'
                           : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
