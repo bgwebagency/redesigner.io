@@ -23,7 +23,7 @@
     "clsx": "1.2.1",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
-    "greenhouse-react-ui": "1.1.0",
+    "greenhouse-react-ui": "1.1.1",
     "next": "13.4.4",
     "nsfwjs": "2.4.2",
     "postcss": "8.4.24",
@@ -39,6 +39,10 @@
   },
   "devDependencies": {
     "@flydotio/dockerfile": "0.2.14",
-    "@types/request-ip": "0.0.37"
+    "@types/request-ip": "0.0.37",
+    "msw": "1.2.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
