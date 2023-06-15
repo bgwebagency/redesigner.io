@@ -21,6 +21,16 @@ export default function Home() {
         <p className="text-center mt-6 text-gray-400">
           No registration required. And entirely free!
         </p>
+        <p className="text-center mt-6 text-gray-400">
+          <a
+            href="https://youtu.be/4YXUGuo9OM4"
+            target="_blank"
+            rel={'noopener'}
+            className="underline tracking-wider"
+          >
+            Learn How I built this
+          </a>
+        </p>
         <div className="flex gap-4 md:gap-6 justify-center">
           <div className="text-center mt-6">
             <Button
