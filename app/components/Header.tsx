@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { AiFillGithub } from 'react-icons/ai'
 
 const Header = () => {
   return (
@@ -13,8 +14,9 @@ const Header = () => {
           href="https://github.com/bgwebagency/redesigner.io"
           target="_blank"
           rel="noreferrer"
+          className="hover:opacity-50 transition duration-150"
         >
-          <Image src={'/github.svg'} alt="Github" width={32} height={32} />
+          <AiFillGithub size={32}/>
         </a>
       </div>
     </header>
