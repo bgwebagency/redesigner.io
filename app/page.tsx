@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { Button } from 'greenhouse-react-ui'
 import { useRouter } from 'next/navigation'
 import { useMediaQueries } from '@react-hook/media-query'
+import React from 'react'
+import Loading from './components/Loading'
 
 export default function Home() {
   const router = useRouter()
@@ -10,6 +12,7 @@ export default function Home() {
     md: 'only screen and (min-width: 768px)',
     xxl: 'only screen and (min-width: 1536px)',
   })
+  const [isLoading, setLoading] = React.useState(true)
 
   return (
     <div className="mb-auto">
@@ -34,7 +37,7 @@ export default function Home() {
         <div className="flex gap-4 md:gap-6 justify-center">
           <div className="text-center mt-6">
             <Button
-              onClick={() => router.push('/room')}
+              onClick={() => {setLoading(true); router.push('/room')}}
               className="tracking-wider text-xs md:text-sm"
             >
               Redesign Room
@@ -42,7 +45,7 @@ export default function Home() {
           </div>
           <div className="text-center mt-6">
             <Button
-              onClick={() => router.push('/building')}
+              onClick={() => {setLoading(true); router.push('/building')}}
               layout="outline"
               className="tracking-wider text-xs md:text-sm"
             >
@@ -69,6 +72,7 @@ export default function Home() {
           />
         </div>
       </div>
+      {isLoading && <Loading />}
     </div>
   )
 }
