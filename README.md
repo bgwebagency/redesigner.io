@@ -18,8 +18,7 @@ Please ⭐️ star this project and share it with others to show your support. [
 
 ## Tutorial
 
-- Watch full tutorial on how I built this on my [YouTube channel](https://youtu.be/4YXUGuo9OM4) entirely for free!
-
+- Watch full tutorial on how I built this on my [YouTube channel](https://youtu.be/4YXUGuo9OM4) for free!
 
 ## Getting Started
 
@@ -28,38 +27,41 @@ Please ⭐️ star this project and share it with others to show your support. [
 2. **Clone the forked repository**: Open your terminal and navigate to the desired directory. Use the following command to clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourGitHubUsername/redesigner.io 
+   git clone https://github.com/yourGitHubUsername/redesigner.io
    ```
 
-   * Replace the yourGitHubUsername with your username
+   - Replace the yourGitHubUsername with your username
 
    \
-<br>
+   <br>
 
-3. **Install Dependencies**: 
+3. **Install Dependencies**:
 
    ```bash
    npm install
    ```
 
-4. **Run the project**: 
+4. **Run the project**:
 
    ```bash
    npm run dev
    ```
-   * Check in the localhost if it's working
-   \
-<br>
 
-5. **Create a new branch using the command**: 
+   - Check in the localhost if it's working
+     \
+     <br>
+
+5. **Create a new branch using the command**:
 
    ```bash
    git branch newBanchName
    ```
-   * Try to use a specific name for example: issue36-button-color-change
-\
-<br>
-6. **Change to the new branch**: 
+
+   - Try to use a specific name for example: issue36-button-color-change
+     \
+     <br>
+
+6. **Change to the new branch**:
 
    ```bash
    git checkout newBranchName
@@ -74,12 +76,15 @@ Please ⭐️ star this project and share it with others to show your support. [
    ```bash
    git add .
    ```
+
    ```bash
    git commit -m "your comment"
    ```
-   * Please make a meaningful comment like: "I change the color of the button submit"
-   \
-<br>
+
+   - Please make a meaningful comment like: "I change the color of the button submit"
+     \
+     <br>
+
    ```bash
    git push origin newBranchName
    ```
