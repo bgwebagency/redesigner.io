@@ -12,7 +12,7 @@ export default function Home() {
     md: 'only screen and (min-width: 768px)',
     xxl: 'only screen and (min-width: 1536px)',
   })
-  const [isLoading, setLoading] = React.useState(true)
+  const [isLoading, setLoading] = React.useState(false)
 
   return (
     <div className="mb-auto">
