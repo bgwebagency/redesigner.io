@@ -50,7 +50,7 @@ export default function RootLayout({
           <meta name="twitter:title" content="Redesigner" />
           <meta
             name="twitter:description"
-            content="Redesign your house interior and exterior with AI for free"
+            content="Redesign your house interior and exterior with AI for free!"
           />
           <meta
             property="og:image"
