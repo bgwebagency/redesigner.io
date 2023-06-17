@@ -32,9 +32,6 @@ Please ⭐️ star this project and share it with others to show your support. [
 
    - Replace the yourGitHubUsername with your username
 
-   \
-   <br>
-
 3. **Install Dependencies**:
 
    ```bash
