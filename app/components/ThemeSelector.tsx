@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import { RoomThemeType } from '../../utils/roomTypes'
+import { RoomThemeType } from '@redesigner/utils/roomTypes'
 import clsx from 'clsx'
-import { BuildingThemeType } from '../../utils/buildingTypes'
+import { BuildingThemeType } from '@redesigner/utils/buildingTypes'
 
 type Props = {
   options: RoomThemeType[] | BuildingThemeType[]
