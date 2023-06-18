@@ -6,7 +6,7 @@ import {
   BuildingThemeTypes,
   BuildingType,
   BuildingTypes,
-} from '../../utils/buildingTypes'
+} from '@redesigner/utils/buildingTypes'
 
 type ContextProps = {
   buildingType: BuildingType | null
