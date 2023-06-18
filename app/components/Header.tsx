@@ -15,6 +15,7 @@ const Header = () => {
           target="_blank"
           rel="noreferrer"
           className="hover:opacity-50 transition duration-150"
+          aria-label="Github"
         >
           <AiFillGithub size={32}/>
         </a>
