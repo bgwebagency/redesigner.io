@@ -6,7 +6,7 @@ import {
   RoomThemeTypes,
   RoomType,
   RoomTypes,
-} from '../../utils/roomTypes'
+} from '@redesigner/utils/roomTypes'
 
 type ContextProps = {
   roomType: RoomType | null

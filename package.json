@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:e2e": "playwright test"
+    "commitmsg": "commitlint -E HUSKY_GIT_PARAMS"
   },
   "dependencies": {
     "@headlessui/react": "1.7.15",
@@ -42,5 +43,14 @@
   "devDependencies": {
     "@playwright/test": "^1.35.1",
     "@types/request-ip": "0.0.37"
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
+    "@types/request-ip": "0.0.37",
+    "husky": "^8.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "npm run commitmsg"
+    }
   }
 }

@@ -5,9 +5,9 @@ import React from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { RoomType } from '../../utils/roomTypes'
+import { RoomType } from '@redesigner/utils/roomTypes'
 import clsx from 'clsx'
-import { BuildingType } from '../../utils/buildingTypes'
+import { BuildingType } from '@redesigner/utils/buildingTypes'
 
 type Props = {
   options: RoomType[] | BuildingType[]

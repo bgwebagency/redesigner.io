@@ -18,6 +18,7 @@ const Footer = () => {
         target="_blank"
         rel="noreferrer"
         className="hover:opacity-50 transition duration-150"
+        aria-label="Twitter"
       >
         <AiFillTwitterCircle size={20} />
       </a>
@@ -26,6 +27,7 @@ const Footer = () => {
         target="_blank"
         rel="noreferrer"
         className="hover:opacity-50 transition duration-150"
+        aria-label="Discord"
       >
         <FaDiscord size={20} />
       </a>
@@ -34,6 +36,7 @@ const Footer = () => {
         target="_blank"
         rel="noreferrer"
         className="hover:opacity-50 transition duration-150"
+        aria-label="Youtube"
       >
         <AiFillYoutube size={20} />
       </a>
@@ -42,6 +45,7 @@ const Footer = () => {
         target="_blank"
         rel="noreferrer"
         className="hover:opacity-50 transition duration-150"
+        aria-label="BG Web Agency website"
       >
         <TbWorldWww size={20} />
       </a>
@@ -50,6 +54,7 @@ const Footer = () => {
         target="_blank"
         rel="noreferrer"
         className="hover:opacity-50 transition duration-150"
+        aria-label="Tiktok"
       >
         <BsTiktok size={20} />
       </a>
@@ -58,6 +63,7 @@ const Footer = () => {
         target="_blank"
         rel="noreferrer"
         className="hover:opacity-50 transition duration-150"
+        aria-label="Instagram"
       >
         <AiFillInstagram size={20} />
       </a>
@@ -66,6 +72,7 @@ const Footer = () => {
         target="_blank"
         rel="noreferrer"
         className="hover:opacity-50 transition duration-150"
+        aria-label="Linkedin"
       >
         <AiFillLinkedin size={20} />
       </a>
