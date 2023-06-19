@@ -43,5 +43,10 @@
   "devDependencies": {
     "@playwright/test": "^1.35.1",
     "@types/request-ip": "0.0.37"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "npm run commitmsg"
+    }
   }
 }

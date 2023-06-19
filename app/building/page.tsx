@@ -1,17 +1,17 @@
 'use client'
 
 import React, { useContext, useEffect } from 'react'
-import UploadComponent from '../components/UploadComponent'
-import Dropdown from '../components/Dropdown'
+import UploadComponent from 'components/UploadComponent'
+import Dropdown from 'components/Dropdown'
 import {
   BuildingThemeType,
   BuildingThemeTypes,
   BuildingType,
   BuildingTypes,
-} from '../../utils/buildingTypes'
-import ThemeSelector from '../components/ThemeSelector'
-import { BuildingContext } from '../context/BuildingContext'
-import { RoomContext } from '../context/RoomContext'
+} from '@redesigner/utils/buildingTypes'
+import ThemeSelector from 'components/ThemeSelector'
+import { BuildingContext } from '@redesigner/app/context/BuildingContext'
+import { RoomContext } from '@redesigner/app/context/RoomContext'
 
 const Building = () => {
   const { buildingType, setBuildingType, buildingTheme, setBuildingTheme } =
