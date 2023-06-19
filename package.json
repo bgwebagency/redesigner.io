@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "commitmsg": "commitlint -E HUSKY_GIT_PARAMS",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "prettier": "prettier \"**/*.+(js|json|ts|jsx|tsx)\"",
+    "check-format": "npm run prettier -- --list-different",
+    "format": "npm run prettier -- --write"
   },
   "dependencies": {
     "@headlessui/react": "1.7.15",
@@ -31,6 +34,7 @@
     "nsfwjs": "2.4.2",
     "playwright": "^1.35.1",
     "postcss": "8.4.24",
+    "prettier": "^2.8.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "4.9.0",
@@ -44,13 +48,14 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
-    "husky": "^8.0.3",
     "@playwright/test": "^1.35.1",
-    "@types/request-ip": "0.0.37"
+    "@types/request-ip": "0.0.37",
+    "husky": "^8.0.3"
   },
   "husky": {
     "hooks": {
-      "commit-msg": "npm run commitmsg"
+      "commit-msg": "npm run commitmsg",
+      "pre-commit": "npm run check-format"
     }
   }
 }
