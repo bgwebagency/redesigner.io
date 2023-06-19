@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillGithub } from "react-icons/ai";
-import { BsSun, BsMoonStarsFill } from "react-icons/bs";
+import { BsSunFill, BsMoonStarsFill } from "react-icons/bs";
 
 const Header = () => {
   const [theme, setTheme] = React.useState<string>("dark");
@@ -28,15 +28,15 @@ const Header = () => {
               className="mt-1"
               onClick={() => {
                 setTheme("light");
-                document.documentElement.classList.toggle("dark");
+                document.body.classList.toggle("dark");
               }}
             />
           ) : (
-            <BsSun
+            <BsSunFill
               size={32}
               onClick={() => {
                 setTheme("dark");
-                document.documentElement.classList.toggle("dark");
+                document.body.classList.toggle("dark");
               }}
             />
           )}
