@@ -19,7 +19,6 @@ export default function Home() {
       <div className="flex flex-col justify-center mt-8 md:mt-14 2xl:mt-40">
         <h1
           className="text-3xl md:text-5xl 2xl:text-6xl font-bold text-center leading-normal 2xl:leading-tight"
-          id="title"
         >
           Redesign your home <br />
           <span className="text-primary">with AI</span>
@@ -45,7 +44,6 @@ export default function Home() {
                 router.push("/room");
               }}
               className="tracking-wider text-xs md:text-sm"
-              id="room-btn"
             >
               Redesign Room
             </Button>
@@ -58,7 +56,6 @@ export default function Home() {
               }}
               layout="outline"
               className="tracking-wider text-xs md:text-sm"
-              id="building-btn"
             >
               Redesign Building
             </Button>
