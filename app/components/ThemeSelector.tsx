@@ -5,6 +5,7 @@ import { RoomThemeType } from '@redesigner/utils/roomTypes'
 import clsx from 'clsx'
 import { BuildingThemeType } from '@redesigner/utils/buildingTypes'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 type Props = {
   options: RoomThemeType[] | BuildingThemeType[]
@@ -40,7 +41,8 @@ const ThemeSelector = ({
           )}
           onClick={() => onChange(item)}
         >
-          <img src={ pathname === '/room' ? `${pathname}-${item.toLowerCase()}.jpg` : `${pathname}-${item.toLowerCase()}.png` }/>
+          <Image alt={pathname} src={ pathname === '/room' ? `${pathname}-${item.toLowerCase()}.jpg` : `${pathname}-${item.toLowerCase()}.png` } loading="lazy" width={500}
+        height={500}/>
           {item}
         </button>
       ))}
