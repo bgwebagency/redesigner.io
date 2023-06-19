@@ -4,6 +4,7 @@ import React from 'react'
 import { RoomThemeType } from '@redesigner/utils/roomTypes'
 import clsx from 'clsx'
 import { BuildingThemeType } from '@redesigner/utils/buildingTypes'
+import { usePathname } from 'next/navigation'
 
 type Props = {
   options: RoomThemeType[] | BuildingThemeType[]
@@ -19,6 +20,9 @@ const ThemeSelector = ({
   onChange,
   ...props
 }: Props) => {
+  //Get the path
+  const pathname = usePathname()
+
   return (
     <div
       className={clsx(
@@ -36,6 +40,7 @@ const ThemeSelector = ({
           )}
           onClick={() => onChange(item)}
         >
+          <img src={ pathname === '/room' ? `${pathname}-${item.toLowerCase()}.jpg` : `${pathname}-${item.toLowerCase()}.png` }/>
           {item}
         </button>
       ))}
