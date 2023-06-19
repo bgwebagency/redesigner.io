@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@headlessui/react": "1.7.15",
@@ -39,6 +40,7 @@
     "uploader": "^3.0.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.35.1",
     "@types/request-ip": "0.0.37"
   }
 }
