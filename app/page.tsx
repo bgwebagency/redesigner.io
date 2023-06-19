@@ -37,7 +37,10 @@ export default function Home() {
         <div className="flex gap-4 md:gap-6 justify-center">
           <div className="text-center mt-6">
             <Button
-              onClick={() => {setLoading(true); router.push('/room')}}
+              onClick={() => {
+                setLoading(true)
+                router.push('/room')
+              }}
               className="tracking-wider text-xs md:text-sm"
             >
               Redesign Room
@@ -45,7 +48,10 @@ export default function Home() {
           </div>
           <div className="text-center mt-6">
             <Button
-              onClick={() => {setLoading(true); router.push('/building')}}
+              onClick={() => {
+                setLoading(true)
+                router.push('/building')
+              }}
               layout="outline"
               className="tracking-wider text-xs md:text-sm"
             >
