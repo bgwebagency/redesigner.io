@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "commitmsg": "commitlint -E HUSKY_GIT_PARAMS",
-    "test": "jest --watch --coverage"
+    "test": "jest --watchAll --coverage"
   },
   "dependencies": {
     "@headlessui/react": "1.7.15",
