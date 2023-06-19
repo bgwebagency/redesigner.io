@@ -15,4 +15,5 @@ module.exports = greenhouse({
     },
   },
   plugins: [],
+  darkMode: "class",
 })
