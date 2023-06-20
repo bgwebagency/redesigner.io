@@ -13,6 +13,7 @@ import { useMediaQuery } from '@react-hook/media-query'
 import Link from 'next/link'
 import { RoomContext } from '@redesigner/app/context/RoomContext'
 import { BuildingContext } from '@redesigner/app/context/BuildingContext'
+import Loading from './Loading'
 
 if (!process.env.NEXT_PUBLIC_UPLOAD_IO_API_KEY)
 	throw new Error('UPLOAD_IO_API_KEY is not set')
@@ -151,6 +152,8 @@ export default function UploadComponent() {
 					{buildingTheme} {buildingType}
 				</Button>
 			</p>
+
+			{loading && <Loading />}
 
 			{!imageUrl && (
 				<UploadDropzone
