@@ -24,3 +24,5 @@
 *.yaml
 
 package-lock.json
+
+.next
