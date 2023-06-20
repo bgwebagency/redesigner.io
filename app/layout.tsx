@@ -2,7 +2,7 @@
 import './globals.css'
 import { GreenHouse } from 'greenhouse-react-ui'
 import { Analytics } from '@vercel/analytics/react'
-import Header from './components/Header'
+import Header from './components/Header/Header'
 import Footer from './components/Footer'
 import ErrorBoundary from './components/ErrorBoundary'
 import { BuildingProvider } from './context/BuildingContext'
