@@ -85,3 +85,34 @@ Please ⭐️ star this project and share it with others to show your support. [
    ```bash
    git push origin newBranchName
    ```
+
+
+#### How to create a .env file. 
+
+1. **Navigate to the root of your project** 
+   
+   <img src="./public/root.jpg" alt="this is the files system of the project" style="height: 300px">
+
+
+
+2. **Cick on new file**
+    <img src="./public/newfile.jpg" alt="this is the files system of the project">
+
+3. **Name the new file .env**
+    <img src="./public/env.jpg" alt="this is the files system of the project">
+
+4. **Now go to the file .gitignore**
+    <img src="./public/gitignore.jpg" alt="this is the files system of the project">
+
+5. **Check the .env file it's listed in the file**
+    <img src="./public/localenv.jpg" alt="this is the files system of the project">
+
+6. **Go to the file .example.env**
+    <img src="./public/exampleEnv.jpg" alt="this is the files system of the project">
+    
+7. **Copy the data inside the file**
+    <img src="./public/dataExampleEnv.jpg" alt="this is the files system of the project">
+    
+7. **Paste it in your .Env**
+    <img src="./public/pasteEnv.jpg" alt="this is the files system of the project">
+    
