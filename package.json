@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "next lint",
 		"commitmsg": "commitlint -E HUSKY_GIT_PARAMS",
-		"test": "jest --watchAll --coverage",
+		"test": "jest",
+    "test:coverage": "jest --watchAll --coverage",
 		"test:e2e": "playwright test",
 		"prepare": "husky install",
 		"prettier": "prettier \"**/*.+(js|json|ts|jsx|tsx)\"",
@@ -69,7 +70,7 @@
 	},
 	"lint-staged": {
 		"app/**/*.{js,jsx,ts,tsx}": [
-			"npm run test --watchAll=false --bail --findRelatedTests --maxWorkers=50%",
+			"npm run test",
 			"eslint --max-warnings=0"
 		]
 	}
