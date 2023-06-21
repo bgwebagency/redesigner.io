@@ -41,8 +41,8 @@ const ThemeSelector = ({
           )}
           onClick={() => onChange(item)}
         >
-          <Image alt={pathname} src={ pathname === '/room' ? `${pathname}-${item.toLowerCase()}.jpg` : `${pathname}-${item.toLowerCase()}.png` } loading="lazy" width={500}
-        height={500}/>
+          <Image alt={pathname} src={ pathname === '/room' ? `${pathname}-${item.toLowerCase()}.jpg` : `${pathname}-${item.toLowerCase()}.png` } loading="lazy" width={100}
+        height={100}/>
           {item}
         </button>
       ))}
