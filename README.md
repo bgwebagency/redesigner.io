@@ -102,7 +102,8 @@ tutorials!
 
 #### How to create a .env file.
 
-1. **Navigate to the root of your project** \
+1. **Navigate to the root of your project** 
+   \
     <br>
 
    <img src="./public/root.jpg" alt="this is the files system of the project" style="height: 300px">
@@ -110,25 +111,26 @@ tutorials!
    \
     <br>
 
-2. **Cick on new file** \
+2. **Cick on new file** 
+   \
     <br>
    <img src="./public/newfile.jpg" alt="this is the files system of the project">
    \
     <br>
 3. **Name the new file .env**
-4.    \
+   \
     <br>
    <img src="./public/env.jpg" alt="this is the files system of the project"> \
     <br>
-5. **Now go to the file .gitignore** \
+4. **Now go to the file .gitignore** 
+   \
     <br>
    <img src="./public/gitignore.jpg" alt="this is the files system of the project">
 
    \
     <br>
 
-6. **Check the .env file it's listed in the file**
-
+5. **Check the .env file it's listed in the file**
    \
     <br>
    <img src="./public/localenv.jpg" alt="this is the files system of the project">
@@ -136,7 +138,7 @@ tutorials!
    \
     <br>
 
-7. **Go to the file .example.env**
+6. **Go to the file .example.env**
 
    \
     <br>
@@ -145,12 +147,12 @@ tutorials!
    \
     <br>
 
-8. **Copy the data inside the file** \
+7. **Copy the data inside the file** \
     <br>
    <img src="./public/dataExampleEnv.jpg" alt="this is the files system of the project">
    \
     <br>
-9. **Paste it in your .Env**
+8. **Paste it in your .Env**
 
    \
     <br>
