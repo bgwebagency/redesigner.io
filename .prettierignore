@@ -1,0 +1,30 @@
+# Contains both gitignore and prettierignore content.
+# Can be skipped if multiple ignorePaths can be mentioned: https://github.com/prettier/prettier/issues/8048
+# dependencies
+/node_modules
+
+# production
+/build
+
+# testing
+/coverage
+
+# misc
+.DS_Store
+.eslintcache
+
+
+# Local .env files
+.env*.local
+
+#IDE
+.idea
+
+# Ignore all yaml files:
+*.yaml
+
+package-lock.json
+
+.next
+
+public

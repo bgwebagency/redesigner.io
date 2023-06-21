@@ -8,18 +8,18 @@ import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 
 type Props = {
-  options: RoomThemeType[] | BuildingThemeType[]
-  className?: string
-  selected: RoomThemeType | BuildingThemeType
-  onChange: (item: RoomThemeType | BuildingThemeType) => void
+	options: RoomThemeType[] | BuildingThemeType[]
+	className?: string
+	selected: RoomThemeType | BuildingThemeType
+	onChange: (item: RoomThemeType | BuildingThemeType) => void
 }
 
 const ThemeSelector = ({
-  options,
-  className,
-  selected,
-  onChange,
-  ...props
+	options,
+	className,
+	selected,
+	onChange,
+	...props
 }: Props) => {
   //Get the path
   const pathname = usePathname()
