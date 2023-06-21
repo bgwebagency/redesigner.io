@@ -20,6 +20,11 @@ Please ⭐️ star this project and share it with others to show your support. [
 
 - Watch full tutorial on how I built this on my [YouTube channel](https://youtu.be/4YXUGuo9OM4) for free!
 
+
+## Demo
+
+![](./public/screen-capture.gif)
+
 ## Getting Started
 
 1. **Fork the project**: Click the "Fork" button at the top-right corner of the project's GitHub page to create a copy of the repository under your own GitHub account.
