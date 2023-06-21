@@ -102,7 +102,8 @@ tutorials!
 
 #### How to create a .env file.
 
-1. **Navigate to the root of your project** \
+1. **Navigate to the root of your project** 
+   \
     <br>
 
    <img src="./public/root.jpg" alt="this is the files system of the project" style="height: 300px">
@@ -110,15 +111,19 @@ tutorials!
    \
     <br>
 
-2. **Cick on new file** \
+2. **Cick on new file** 
+   \
     <br>
    <img src="./public/newfile.jpg" alt="this is the files system of the project">
    \
     <br>
 3. **Name the new file .env**
+   \
+    <br>
    <img src="./public/env.jpg" alt="this is the files system of the project"> \
     <br>
-4. **Now go to the file .gitignore** \
+4. **Now go to the file .gitignore** 
+   \
     <br>
    <img src="./public/gitignore.jpg" alt="this is the files system of the project">
 
@@ -126,7 +131,6 @@ tutorials!
     <br>
 
 5. **Check the .env file it's listed in the file**
-
    \
     <br>
    <img src="./public/localenv.jpg" alt="this is the files system of the project">
