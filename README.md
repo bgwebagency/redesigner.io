@@ -116,16 +116,18 @@ tutorials!
    \
     <br>
 3. **Name the new file .env**
+4.    \
+    <br>
    <img src="./public/env.jpg" alt="this is the files system of the project"> \
     <br>
-4. **Now go to the file .gitignore** \
+5. **Now go to the file .gitignore** \
     <br>
    <img src="./public/gitignore.jpg" alt="this is the files system of the project">
 
    \
     <br>
 
-5. **Check the .env file it's listed in the file**
+6. **Check the .env file it's listed in the file**
 
    \
     <br>
@@ -134,7 +136,7 @@ tutorials!
    \
     <br>
 
-6. **Go to the file .example.env**
+7. **Go to the file .example.env**
 
    \
     <br>
@@ -143,12 +145,12 @@ tutorials!
    \
     <br>
 
-7. **Copy the data inside the file** \
+8. **Copy the data inside the file** \
     <br>
    <img src="./public/dataExampleEnv.jpg" alt="this is the files system of the project">
    \
     <br>
-8. **Paste it in your .Env**
+9. **Paste it in your .Env**
 
    \
     <br>
