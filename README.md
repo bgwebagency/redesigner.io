@@ -104,6 +104,8 @@ Please ⭐️ star this project and share it with others to show your support. [
      <br>
 
 2. **Cick on new file**
+     \
+     <br>
     <img src="./public/newfile.jpg" alt="this is the files system of the project">
      \
      <br>
@@ -134,7 +136,7 @@ Please ⭐️ star this project and share it with others to show your support. [
      <br>
     <img src="./public/exampleEnv.jpg" alt="this is the files system of the project">
 
-       \
+      \
      <br>
     
 7. **Copy the data inside the file**
@@ -145,7 +147,7 @@ Please ⭐️ star this project and share it with others to show your support. [
       \
      <br>
     
-7. **Paste it in your .Env**
+8. **Paste it in your .Env**
 
      \
      <br>
