@@ -12,7 +12,7 @@ import { BsTiktok } from 'react-icons/bs'
 
 const Footer = () => {
 	return (
-		<footer className="flex justify-between md:justify-end md:gap-16 mt-20 mb-4">
+		<footer className="flex justify-between md:justify-center md:gap-16 mt-20 mb-4">
 			<a
 				href="https://twitter.com/kirankdash"
 				target="_blank"
