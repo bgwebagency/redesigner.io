@@ -24,6 +24,7 @@ const Header = () => {
 				<div className="w-[2.5em] hover:cursor-pointer">
 					{theme === 'dark' ? (
 						<BsMoonStarsFill
+							aria-label="moon"
 							size={26}
 							className="mt-1"
 							onClick={() => {
@@ -33,6 +34,7 @@ const Header = () => {
 						/>
 					) : (
 						<BsSunFill
+							aria-label="sun"
 							size={32}
 							onClick={() => {
 								setTheme('dark')
